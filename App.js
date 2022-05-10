@@ -1,10 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import {useEffect, useState} from "react";
 import * as Location from 'expo-location';
-import openWeatherMapService from "./src/openWeatherMapService";
-import Weather from "./src/Components/weather";
-import view from "react-native-web/dist/exports/View";
+import openWeatherMapService from "./src/services/openWeatherMapService";
+import Weather from "./src/Components/Weather";
 
 export default function App() {
 

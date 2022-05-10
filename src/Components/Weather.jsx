@@ -3,10 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import {weatherConditions} from "../services/weatherConditions";
+import Forecast from "./Forecast";
 
 const Weather = ({ weather, temperature }) => {
-
-    console.log(weather);
 
     function ucFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -31,6 +30,9 @@ const Weather = ({ weather, temperature }) => {
                 </View>
                 <Text style={styles.description}>{ucFirst(weather.weather[0].description)}</Text>
             </View>
+
+            <Forecast id={weather.id}/>
+
             <View style={styles.bodyContainer}>
                 <Text style={styles.title}>{weatherConditions[weather.weather[0].main].title}</Text>
                 <Text style={styles.subtitle}>
