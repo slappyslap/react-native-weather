@@ -1,7 +1,7 @@
 class openWeatherMapDataService {
 
     baseURL = "https://api.openweathermap.org/data/2.5/";
-    APIKey = "5c239cde6675d9cccc63f41c295e25bc";
+    APIKey = "API_KEY";
 
     forecast(id) {
         return fetch(`${this.baseURL}/forecast?id=${id}&lang=fr&units=metric&appid=${this.APIKey}`, { method: 'get' })
