@@ -30,7 +30,7 @@ export default function App() {
     return (
         <View style={styles.container}>
             {weather ? (
-                    <Weather weather={weather}/>
+                    <Weather weather={weather} location={location}/>
                 ) : (
                     <View style={styles.loading}>
                         <ActivityIndicator size="large" color="#000" />

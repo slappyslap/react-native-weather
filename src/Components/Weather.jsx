@@ -4,9 +4,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import {weatherConditions} from "../services/weatherConditions";
 import Forecast from "./Forecast";
+import Maps from "./maps";
 
-const Weather = ({ weather, temperature }) => {
+const Weather = ({ weather, location }) => {
 
+    console.log(location)
     function ucFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -32,6 +34,8 @@ const Weather = ({ weather, temperature }) => {
             </View>
 
             <Forecast id={weather.id}/>
+
+            <Maps lat={location.coords.latitude} lon={location.coords.longitude}/>
 
             <View style={styles.bodyContainer}>
                 <Text style={styles.title}>{weatherConditions[weather.weather[0].main].title}</Text>
