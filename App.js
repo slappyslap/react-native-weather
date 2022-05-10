@@ -1,20 +1,56 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import {useEffect, useState} from "react";
+import * as Location from 'expo-location';
+import openWeatherMapService from "./src/openWeatherMapService";
+import Weather from "./src/Components/weather";
+import view from "react-native-web/dist/exports/View";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+    const [location, setLocation] = useState(null);
+    const [error, setError] = useState(null);
+    const [weather, setWeather] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setError('Permission to access location was denied');
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location)
+
+            openWeatherMapService.find(location.coords.latitude, location.coords.longitude).then((data) => {
+                setWeather(data);
+            })
+        })();
+    }, []);
+
+    return (
+        <View style={styles.container}>
+            {weather ? (
+                    <Weather weather={weather}/>
+                ) : (
+                    <View style={styles.loading}>
+                        <ActivityIndicator size="large" color="#000" />
+                        <Text>Chargement...</Text>
+                    </View>
+            )}
+
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+    },
+    loading: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    }
 });
